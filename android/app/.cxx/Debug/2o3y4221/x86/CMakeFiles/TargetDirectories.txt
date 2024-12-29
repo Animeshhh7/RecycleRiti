@@ -1,0 +1,2 @@
+D:/flutter projects/Final Year Project/recycle_riti/android/app/.cxx/Debug/2o3y4221/x86/CMakeFiles/edit_cache.dir
+D:/flutter projects/Final Year Project/recycle_riti/android/app/.cxx/Debug/2o3y4221/x86/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,5 @@
+{
+    "gradle.javaDebug.cleanOutput": true,
+    "gradle.debug": true,
+    "maven.terminal.useJavaHome": true
+}
