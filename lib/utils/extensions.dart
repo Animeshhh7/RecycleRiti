@@ -4,3 +4,4 @@ extension StringExtension on String {
     return this[0].toUpperCase() + substring(1).toLowerCase();
   }
 }// 16000
+// 18394
