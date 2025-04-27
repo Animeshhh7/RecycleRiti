@@ -11,16 +11,16 @@ import 'package:recycle_riti/routes/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
-  static String baseUrl = dotenv.env['BASE_URL'] ?? 'http://10.0.2.2:5000/api';
+  static String baseUrl = dotenv.env['BASE_URL'] ?? 'http://192.168.1.9:5000/api';
   static const int maxRetries = 2; // Maximum number of retries for network requests
 
   static Future<void> testBackend() async {
     try {
-      final result = await InternetAddress.lookup('10.0.2.2').timeout(const Duration(seconds: 5));
+      final result = await InternetAddress.lookup('192.168.1.9').timeout(const Duration(seconds: 5));
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        print('Host 10.0.2.2 is reachable');
+        print('Host 192.168.1.9 is reachable');
       } else {
-        print('Host 10.0.2.2 not reachable');
+        print('Host 192.168.1.9 not reachable');
       }
       final res = await http.get(
         Uri.parse('$baseUrl/health'),
@@ -64,7 +64,7 @@ class AuthService {
       }
       throw Exception(data['message'] ?? 'Signup failed. Please try again.');
     } catch (e) {
-      throw Exception('Signup failed. Please check your connection and try again.');
+      throw Exception('Signup failed: $e');
     }
   }
 
@@ -103,7 +103,7 @@ class AuthService {
       throw Exception(data['message'] ?? 'Login failed. Please try again.');
     } catch (e) {
       print('Login error: $e');
-      throw Exception('Login failed. Please check your connection and try again.');
+      throw Exception('Login failed: $e');
     }
   }
 
@@ -138,7 +138,7 @@ class AuthService {
       await prefs.remove('accessToken');
       await prefs.remove('refreshToken');
       print('Token refresh error: $e');
-      throw Exception('Token refresh failed. Please login again.');
+      throw Exception('Token refresh failed: $e');
     }
   }
 
@@ -164,7 +164,7 @@ class AuthService {
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove('accessToken');
       await prefs.remove('refreshToken');
-      print('Tokens cleared during logout (error case)');
+      print('Tokens cleared during logout (error case): $e');
       throw Exception('Logout failed: $e');
     }
   }
@@ -345,7 +345,7 @@ class AuthService {
             }
             throw Exception(data['message'] ?? 'Request failed. Please try again.');
           } catch (e) {
-            throw Exception('Request failed: Invalid response from server.');
+            throw Exception('Request failed: Invalid response from server: $e');
           }
         }
 
@@ -369,7 +369,7 @@ class AuthService {
       return data;
     } catch (e) {
       print('Get user profile error: $e');
-      throw Exception(e.toString().replaceFirst('Exception: ', ''));
+      throw Exception('Failed to fetch user profile: $e');
     }
   }
 
@@ -436,7 +436,8 @@ class AuthService {
       final data = jsonDecode(res.body);
       return data;
     } catch (e) {
-      throw Exception('Failed to update profile. Please try again.');
+      print('Update profile error: $e');
+      throw Exception('Failed to update profile: $e');
     }
   }
 
@@ -489,7 +490,7 @@ class AuthService {
       } else if (e.toString().contains('Session expired')) {
         throw Exception('Your session has expired. Please log in again.');
       }
-      throw Exception('Unable to schedule pickup. Please try again. Error: $e');
+      throw Exception('Unable to schedule pickup: $e');
     }
   }
 
@@ -499,7 +500,7 @@ class AuthService {
       final data = jsonDecode(res.body);
       return data;
     } catch (e) {
-      throw Exception('Failed to fetch pickup requests. Please try again.');
+      throw Exception('Failed to fetch pickup requests: $e');
     }
   }
 
@@ -527,7 +528,7 @@ class AuthService {
         'pickupRequests': agentRequests ?? [],
       };
     } catch (e) {
-      throw Exception('Failed to fetch agent pickup requests. Please try again.');
+      throw Exception('Failed to fetch agent pickup requests: $e');
     }
   }
 
@@ -540,7 +541,7 @@ class AuthService {
       if (e.toString().contains('Request not found')) {
         throw Exception('Pickup request not found');
       }
-      throw Exception('Failed to track pickup request. Please try again.');
+      throw Exception('Failed to track pickup request: $e');
     }
   }
 
@@ -580,7 +581,7 @@ class AuthService {
       } else if (e.toString().contains('Cannot cancel')) {
         throw Exception('Cannot cancel this request');
       }
-      throw Exception('Failed to cancel pickup request. Please try again.');
+      throw Exception('Failed to cancel pickup request: $e');
     }
   }
 
@@ -619,7 +620,7 @@ class AuthService {
       } else if (e.toString().contains('Not authorized')) {
         throw Exception('Not authorized to complete this request');
       }
-      throw Exception('Failed to mark pickup request as completed. Please try again.');
+      throw Exception('Failed to mark pickup request as completed: $e');
     }
   }
 
@@ -629,13 +630,153 @@ class AuthService {
         Uri.parse('$baseUrl/recyclable-types'),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 30));
+      print('Get recyclable types response: ${res.statusCode} - ${res.body}');
       final data = jsonDecode(res.body);
       if (res.statusCode == 200 && data['success'] == true) {
         return data;
       }
       throw Exception(data['message'] ?? 'Failed to fetch recyclable types');
     } catch (e) {
-      throw Exception('Failed to fetch recyclable types. Please try again.');
+      print('Get recyclable types error: $e');
+      throw Exception('Failed to fetch recyclable types: $e');
+    }
+  }
+
+  static Future<Map<String, dynamic>> getEducationalContent() async {
+    try {
+      // Make a direct GET request without authentication
+      final res = await http.get(
+        Uri.parse('$baseUrl/educational-content'),
+        headers: {'Content-Type': 'application/json'},
+      ).timeout(const Duration(seconds: 30));
+      print('Get educational content response: ${res.statusCode} - ${res.body}');
+      if (res.statusCode == 200) {
+        final data = jsonDecode(res.body);
+        return data;
+      }
+      throw Exception('Failed to fetch recycling tips: Status ${res.statusCode} - ${res.body}');
+    } catch (e) {
+      print('Get educational content error: $e');
+      throw Exception('Failed to fetch recycling tips: $e');
+    }
+  }
+
+  static Future<Map<String, dynamic>> createEducationalContent({
+    required String title,
+    required String content,
+    required String category,
+    File? imageFile,
+  }) async {
+    try {
+      String? imageBase64;
+      if (imageFile != null) {
+        // Validate file exists
+        if (!await imageFile.exists()) {
+          throw Exception('Image file does not exist: ${imageFile.path}');
+        }
+
+        final ext = path.extension(imageFile.path).toLowerCase();
+        if (!['.jpg', '.jpeg', '.png'].contains(ext)) {
+          throw Exception('Only jpg, jpeg, png allowed');
+        }
+
+        // Log file details
+        final fileSize = await imageFile.length();
+        print('Uploading blog image: ${imageFile.path}, Size: ${fileSize ~/ 1024} KB');
+
+        // Determine content type
+        final contentType = lookupMimeType(imageFile.path) ?? 'image/jpeg';
+        print('Blog image content type: $contentType');
+
+        // Read the file as bytes and encode to base64
+        final bytes = await imageFile.readAsBytes();
+        final base64String = base64Encode(bytes);
+        imageBase64 = 'data:$contentType;base64,$base64String';
+        print('Base64 blog image length: ${imageBase64.length}');
+      }
+
+      final res = await makeRequest(
+        'POST',
+        'educational-content',
+        body: {
+          'title': title,
+          'content': content,
+          'category': category,
+          if (imageBase64 != null) 'imageBase64': imageBase64,
+        },
+      );
+      print('Create educational content response: ${res.statusCode} - ${res.body}');
+      final data = jsonDecode(res.body);
+      return data;
+    } catch (e) {
+      print('Create educational content error: $e');
+      throw Exception('Failed to create recycling tip: $e');
+    }
+  }
+
+  static Future<Map<String, dynamic>> updateEducationalContent({
+    required String id,
+    String? title,
+    String? content,
+    String? category,
+    File? imageFile,
+  }) async {
+    try {
+      String? imageBase64;
+      if (imageFile != null) {
+        // Validate file exists
+        if (!await imageFile.exists()) {
+          throw Exception('Image file does not exist: ${imageFile.path}');
+        }
+
+        final ext = path.extension(imageFile.path).toLowerCase();
+        if (!['.jpg', '.jpeg', '.png'].contains(ext)) {
+          throw Exception('Only jpg, jpeg, png allowed');
+        }
+
+        // Log file details
+        final fileSize = await imageFile.length();
+        print('Uploading blog image for update: ${imageFile.path}, Size: ${fileSize ~/ 1024} KB');
+
+        // Determine content type
+        final contentType = lookupMimeType(imageFile.path) ?? 'image/jpeg';
+        print('Blog image content type: $contentType');
+
+        // Read the file as bytes and encode to base64
+        final bytes = await imageFile.readAsBytes();
+        final base64String = base64Encode(bytes);
+        imageBase64 = 'data:$contentType;base64,$base64String';
+        print('Base64 blog image length for update: ${imageBase64.length}');
+      }
+
+      final res = await makeRequest(
+        'PUT',
+        'educational-content/$id',
+        body: {
+          if (title != null) 'title': title,
+          if (content != null) 'content': content,
+          if (category != null) 'category': category,
+          if (imageBase64 != null) 'imageBase64': imageBase64,
+        },
+      );
+      print('Update educational content response: ${res.statusCode} - ${res.body}');
+      final data = jsonDecode(res.body);
+      return data;
+    } catch (e) {
+      print('Update educational content error: $e');
+      throw Exception('Failed to update recycling tip: $e');
+    }
+  }
+
+  static Future<Map<String, dynamic>> deleteEducationalContent(String id) async {
+    try {
+      final res = await makeRequest('DELETE', 'educational-content/$id');
+      print('Delete educational content response: ${res.statusCode} - ${res.body}');
+      final data = jsonDecode(res.body);
+      return data;
+    } catch (e) {
+      print('Delete educational content error: $e');
+      throw Exception('Failed to delete recycling tip: $e');
     }
   }
 

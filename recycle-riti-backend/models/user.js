@@ -16,9 +16,11 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = (models) => {
     User.hasMany(models.PickupRequest, { foreignKey: 'userId', as: 'pickupRequests' });
+    User.hasMany(models.EducationalContent, { foreignKey: 'userId', as: 'educationalContents' });
     User.hasMany(models.EventParticipant, { foreignKey: 'userId', as: 'eventParticipants' });
     User.hasMany(models.Reward, { foreignKey: 'userId', as: 'rewards' });
     User.hasMany(models.RefreshToken, { foreignKey: 'userId', as: 'refreshTokens', onDelete: 'CASCADE' });
+
   };
 
   return User;

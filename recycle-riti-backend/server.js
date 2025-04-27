@@ -75,6 +75,13 @@ if (!fs.existsSync(uploadsPath)) {
   console.log('Uploads directory created:', uploadsPath);
 }
 
+// Create blog_images directory inside uploads
+const blogImagesPath = path.join(__dirname, 'uploads/blog_images');
+if (!fs.existsSync(blogImagesPath)) {
+  fs.mkdirSync(blogImagesPath, { recursive: true });
+  console.log('Blog images directory created:', blogImagesPath);
+}
+
 // Serve static files
 app.use(
   '/uploads',
@@ -93,6 +100,7 @@ app.use(
 const userRoutes = require('./routes/auth_route');
 const pickupRoutes = require('./routes/pickup_route');
 const recyclableTypeRoutes = require('./routes/recyclable_type_route');
+const educationalContentRoutes = require('./routes/educational_content_route'); // Updated import
 
 // Log route mounting for debugging
 console.log('Mounting auth routes at /api/auth');
@@ -103,6 +111,9 @@ app.use('/api/pickup', pickupRoutes);
 
 console.log('Mounting recyclable type routes at /api/recyclable-types');
 app.use('/api/recyclable-types', recyclableTypeRoutes);
+
+console.log('Mounting educational content routes at /api/educational-content');
+app.use('/api/educational-content', educationalContentRoutes);
 
 // Health check
 app.get('/health', (req, res) => res.status(200).json({ success: true, message: 'Server running' }));

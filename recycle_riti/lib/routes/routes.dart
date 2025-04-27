@@ -1,3 +1,4 @@
+// lib/routes/routes.dart
 import 'package:flutter/material.dart';
 import 'package:recycle_riti/api/rest_auth.dart';
 import 'package:recycle_riti/main.dart';
@@ -11,6 +12,7 @@ import 'package:recycle_riti/view/pickup_history_screen.dart';
 import 'package:recycle_riti/view/pickup_screen.dart';
 import 'package:recycle_riti/view/profile_screen.dart';
 import 'package:recycle_riti/view/recycle_screen.dart';
+import 'package:recycle_riti/view/recycling_tips_screen.dart'; // Added import
 import 'package:recycle_riti/view/signup_screen.dart';
 import 'package:recycle_riti/view/splash_screen.dart';
 import 'package:recycle_riti/view/track_request_screen.dart';
@@ -78,6 +80,7 @@ class AppRoutes {
   static const String trackAgent = '/track-agent'; // Track agent screen (user perspective)
   static const String trackRequestUser = '/track-request-user'; // Track request screen for user
   static const String trackRequestAgent = '/track-request-agent'; // Track request screen for agent
+  static const String recyclingTips = '/recycling-tips'; // Added for RecyclingTipsScreen
 
   // Routes for ProfileOptions
   static const String rewards = '/rewards'; // Rewards screen
@@ -195,10 +198,11 @@ class AppRoutes {
       ),
       // Routes for ProfileOptions
       rewards: (context) => const RewardsScreen(),
-      recyclingHistory: (context) => const PickupHistoryScreen(), // Updated to use PickupHistoryScreen
+      recyclingHistory: (context) => const PickupHistoryScreen(),
       eventsHistory: (context) => const EventsHistoryScreen(),
       accountSettings: (context) => const AccountSettingsScreen(),
       helpSupport: (context) => const HelpSupportScreen(),
+      recyclingTips: (context) => const RecyclingTipsScreen(), // Added route
     };
   }
 }

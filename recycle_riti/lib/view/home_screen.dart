@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recycle_riti/api/rest_auth.dart';
+import 'package:recycle_riti/routes/routes.dart'; // Added for named route
 import 'package:recycle_riti/utils/exception_handling.dart';
 import 'package:recycle_riti/utils/theme.dart';
 import 'package:recycle_riti/view/notification_screen.dart';
@@ -232,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           title: "Want Useful Recycling Tips?",
                           actionText: "Learn More",
                           onActionPressed: () {
-                            ExceptionHandling.showSnackBar(context, 'Learn More not implemented');
+                            Navigator.pushNamed(context, AppRoutes.recyclingTips); // Updated to use named route
                           },
                         ),
                         const SizedBox(height: 16),
