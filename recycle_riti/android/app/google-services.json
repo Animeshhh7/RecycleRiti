@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "972817714907",
+    "project_id": "recycle-riti",
+    "storage_bucket": "recycle-riti.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972817714907:android:d6a7afb5514362d20c86fe",
+        "android_client_info": {
+          "package_name": "com.example.recycle_riti"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2Ck7wMutbed_-HCPbwM0rT_7ti80j214"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

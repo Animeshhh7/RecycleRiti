@@ -1,0 +1,19 @@
+# Flutter
+build/ 
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+
+# IDE
+.idea/
+.vscode/
+
+# Node.js
+node_modules/
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
