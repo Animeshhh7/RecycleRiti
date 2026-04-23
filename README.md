@@ -1,16 +1,60 @@
-# recycle_riti
+# ♻️ RecycleRiti
 
-A new Flutter project.
+A simple waste management app to schedule waste pickups, track pickup agents live, participate in events like donations and neighbourhood cleanup activities, and promote recycling.
 
-## Getting Started
+## 🛠️ Tech Stack
+- Flutter  
+- Node.js (Express.js) 
+- PostgreSQL  
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## 🚀 Features
+- Schedule recycling pickups  
+- Live agent tracking  
+- Notifications & updates  
+- Pickup confirmation  
+- Join events near me
+- User & agent dashboards  
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## ⚙️ How It Works
+1. Sign up  
+2. Schedule pickup (date & time)  
+3. Agent accepts request  
+4. Track pickup live  
+5. Pickup completed & confirmed  
+---
+
+## 📱 Screenshots
+
+<p align="center">
+  <img src="assets/screenshots/signup.png" width="200"/>
+  <img src="assets/screenshots/home.png" width="200"/>
+  <img src="assets/screenshots/profile.png" width="200"/>
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/schedule_pickup.png" width="200"/>
+  <img src="assets/screenshots/date_picker.png" width="200"/>
+  <img src="assets/screenshots/time_picker.png" width="200"/>
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/track_pickup.png" width="200"/>
+  <img src="assets/screenshots/live_location.png" width="200"/>
+  <img src="assets/screenshots/pickup_confirmation.png" width="200"/>
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/agent_dashboard.png" width="200"/>
+  <img src="assets/screenshots/agent_accepted_pickup.png" width="200"/>
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/notifications.png" width="200"/>
+  <img src="assets/screenshots/join_events.png" width="200"/>
+</p>
+
+---
