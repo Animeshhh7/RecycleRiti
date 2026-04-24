@@ -1,10 +1,12 @@
 # ♻️ RecycleRiti
 
-A simple waste management app to schedule waste pickups, track pickup agents live, participate in events like donations and neighbourhood cleanup activities, and promote recycling.
+A waste management app to schedule pickups, track agents in real-time, engage in eco-friendly community activities, and earn rewards.
+
+---
 
 ## 🛠️ Tech Stack
 - Flutter  
-- Node.js (Express.js) 
+- Node.js (Express.js)  
 - PostgreSQL  
 
 ---
@@ -14,8 +16,8 @@ A simple waste management app to schedule waste pickups, track pickup agents liv
 - Live agent tracking  
 - Notifications & updates  
 - Pickup confirmation  
-- Join events near me
-- User & agent dashboards  
+- Join nearby events  
+- User & agent dashboards
 
 ---
 
@@ -25,36 +27,48 @@ A simple waste management app to schedule waste pickups, track pickup agents liv
 3. Agent accepts request  
 4. Track pickup live  
 5. Pickup completed & confirmed  
+
 ---
 
 ## 📱 Screenshots
 
-<p align="center">
-  <img src="assets/screenshots/signup.png" width="200"/>
-  <img src="assets/screenshots/home.png" width="200"/>
-  <img src="assets/screenshots/profile.png" width="200"/>
-</p>
+### 🔐 Authentication & Home
+![Signup](assets/screenshots/signup.png)
 
-<p align="center">
-  <img src="assets/screenshots/schedule_pickup.png" width="200"/>
-  <img src="assets/screenshots/date_picker.png" width="200"/>
-  <img src="assets/screenshots/time_picker.png" width="200"/>
-</p>
+![Home](assets/screenshots/home.png)
 
-<p align="center">
-  <img src="assets/screenshots/track_pickup.png" width="200"/>
-  <img src="assets/screenshots/live_location.png" width="200"/>
-  <img src="assets/screenshots/pickup_confirmation.png" width="200"/>
-</p>
+![Profile](assets/screenshots/profile.png)
 
-<p align="center">
-  <img src="assets/screenshots/agent_dashboard.png" width="200"/>
-  <img src="assets/screenshots/agent_accepted_pickup.png" width="200"/>
-</p>
+---
 
-<p align="center">
-  <img src="assets/screenshots/notifications.png" width="200"/>
-  <img src="assets/screenshots/join_events.png" width="200"/>
-</p>
+### 📅 Pickup Scheduling
+![Schedule Pickup](assets/screenshots/schedule_pickup.png)
+
+![Date Picker](assets/screenshots/date_picker.png)
+
+![Time Picker](assets/screenshots/time_picker.png)
+
+---
+
+### 🚚 Tracking & Confirmation
+![Track Pickup](assets/screenshots/track_pickup.png)
+
+![Live Location](assets/screenshots/live_location.png)
+
+![Pickup Confirmation](assets/screenshots/pickup_confirmation.png)
+
+---
+
+### 👨‍🔧 Agent Panel
+![Agent Dashboard](assets/screenshots/agent_dashboard.png)
+
+![Accepted Pickup](assets/screenshots/agent_accepted_pickup.png)
+
+---
+
+### 🔔 Notifications & Events
+![Notifications](assets/screenshots/notifications.png)
+
+![Join Events](assets/screenshots/join_events.png)
 
 ---
